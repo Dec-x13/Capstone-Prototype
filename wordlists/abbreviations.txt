@@ -1,0 +1,36 @@
+# Chat abbreviations: <abbreviation><TAB or spaces><expansion>. The expansion is used for language lookup;
+# the abbreviation itself counts toward the abbreviation rate in features.py. TO BE REVIEWED by the team.
+lng     lang
+u       you
+ur      your
+pls     please
+plz     please
+nmn     naman
+d2      dito
+dn      din
+rn      right
+ty      thank
+tnx     thanks
+thx     thanks
+k       okay
+kk      okay
+bc      because
+bcoz    because
+idk     know
+btw     by
+nvm     never
+omg     oh
+wla     wala
+kc      kasi
+sna     sana
+ksi     kasi
+tlga    talaga
+cge     sige
+pwd     pwede
+gsto    gusto
+bkt     bakit
+dw      daw
+sya     siya
+ikw     ikaw
+nlng    lang
+mgkno   magkano

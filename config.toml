@@ -15,6 +15,11 @@ ngram_min = 2
 ngram_max = 4
 near_identical_similarity = 0.9 # char n-gram cosine similarity for "repeated sending"
 
+[language]
+# Dominant-mix rule: among Bikol/Tagalog/English words, if the second most common language has at least
+# this share, the window is a mix of the top two (Bi-lish, Tag-col, Taglish); otherwise the top language alone.
+mix_second_share = 0.20
+
 [deviation]
 z_threshold = 2.0               # |z| above this marks a feature as deviating (working value)
 std_floor = 0.05                # guards against std = 0
