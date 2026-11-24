@@ -53,7 +53,8 @@ def summary(slot: str) -> None:
                ("photos, videos, stickers and files", s["skipped media"]),
                ("unsent", s["skipped unsent"]), ("calls", s["skipped call"]),
                ("reactions and system notices", s["skipped other"])]
-    st.markdown("**Dropped before analysis:** " + " · ".join(f"{label} {n:,}" for label, n in dropped))
+    st.markdown("**Dropped before analysis**")
+    facts([(label.capitalize(), f"{n:,}") for label, n in dropped])
     st.caption("No message text is shown on this page.")
 
 

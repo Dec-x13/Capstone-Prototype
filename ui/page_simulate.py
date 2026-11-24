@@ -42,7 +42,7 @@ def render(presenter: bool) -> None:
 
     b1, b2, _ = st.columns([1, 1, 3])
     run = b1.button("Run simulation", type="primary", use_container_width=True)
-    again = b2.button("Run again", use_container_width=True, disabled=cond != "takeover" or "sim" not in ss,
+    again = b2.button("Run again", use_container_width=True, disabled=cond != "takeover",
                       help="Draws new random recipients, gaps and hour for takeover timing.")
     if again:
         ss["sim_seed"] = int(ss["sim_seed"]) + 1
@@ -60,8 +60,8 @@ def render(presenter: bool) -> None:
     with left:
         st.markdown("### Your own later messages")
         st.caption("User A's real window at the same position: natural variation.")
-        result_block(ss["sim_own"], "sim_own", presenter=presenter)
+        result_block(ss["sim_own"], "sim_own", presenter=presenter, compact=True)
     with right:
         st.markdown("### Inserted messages from user B")
         st.caption(CONDITIONS[info.condition][0] + ": " + CONDITIONS[info.condition][1])
-        result_block(sim_res, "sim_b", simulated=True, presenter=presenter)
+        result_block(sim_res, "sim_b", simulated=True, presenter=presenter, compact=True)

@@ -64,7 +64,7 @@ def _template(m: str) -> go.layout.Template:
                    tickcolor=c["rule"], title=dict(font=dict(size=15))),
         yaxis=dict(gridcolor=c["grid"], zerolinecolor=c["grid"], linecolor=c["rule"],
                    title=dict(font=dict(size=15))),
-        margin=dict(l=10, r=20, t=48, b=40),
+        margin=dict(l=64, r=24, t=52, b=52),
         hoverlabel=dict(font=dict(family=FONT_STACK, size=15)),
         showlegend=False,
     ))

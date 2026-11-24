@@ -136,7 +136,7 @@ def test_simulation_side_by_side_and_run_again(app):
     click(app, label="Run simulation")
     t = text(app)
     assert "Your own later messages" in t and "Inserted messages from user B" in t
-    assert t.count('class="bg-risk"') == 2 and "Simulated" in t
+    assert t.count('class="bg-risk compact"') == 2 and "Simulated" in t
     app.radio(key="sim_cond").set_value("takeover")
     app.run()
     click(app, label="Run simulation")

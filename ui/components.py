@@ -74,7 +74,7 @@ def facts(rows: list[tuple[str, object]]) -> None:
 
 
 # ----------------------------------------------------------------------------- risk card
-def risk_card(res: WindowResult, simulated: bool = False) -> None:
+def risk_card(res: WindowResult, simulated: bool = False, compact: bool = False) -> None:
     dev, sc, level = res.deviation, res.score, res.level
     color = RISK_COLORS[level]
     segs = "".join(f'<span class="{"on" if i < LEVEL_SEGMENTS[level] else ""}"></span>' for i in range(3))
@@ -87,7 +87,7 @@ def risk_card(res: WindowResult, simulated: bool = False) -> None:
     sim = f'{badge("Simulated", "sim")}<br>' if simulated else ""
     small = " · small baseline: read the fallback score too" if sc.small_baseline else ""
     md(f'''
-<section class="bg-risk" style="--bg-risk:{color}" role="group" aria-label="Risk result: {esc(level)}">
+<section class="bg-risk{' compact' if compact else ''}" style="--bg-risk:{color}" role="group" aria-label="Risk result: {esc(level)}">
   <div>
     {sim}<p class="bg-level">{esc(level)}</p>
     <div class="bg-meter" aria-hidden="true">{segs}</div>

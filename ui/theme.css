@@ -13,10 +13,10 @@
 .bg-header .bg-status b { color: var(--bg-text); font-weight: 600; }
 
 /* ---------- pipeline strip */
-.bg-pipeline { display: flex; flex-wrap: wrap; gap: .2rem .1rem; align-items: center; margin: .5rem 0 .9rem 0;
+.bg-pipeline { display: flex; flex-wrap: wrap; gap: .2rem 0; align-items: center; margin: .5rem 0 .9rem 0;
                padding: .45rem 0; border-top: 1px solid var(--bg-rule); border-bottom: 1px solid var(--bg-rule);
-               font-size: 15px; }
-.bg-stage { color: var(--bg-muted); padding: .1rem .35rem; border-bottom: 3px solid transparent; }
+               font-size: 14px; }
+.bg-stage { color: var(--bg-muted); padding: .1rem .25rem; border-bottom: 3px solid transparent; white-space: nowrap; }
 .bg-stage.on { color: var(--bg-accent); font-weight: 700; border-bottom-color: var(--bg-accent); }
 .bg-sep { color: var(--bg-muted); padding: 0 .1rem; }
 
@@ -58,5 +58,9 @@
 
 /* ---------- empty state */
 .bg-empty { border-left: 4px solid var(--bg-rule); padding: .6rem 1rem; margin: 1rem 0; font-size: 19px; }
+
+/* compact card for side-by-side comparison */
+.bg-risk.compact { grid-template-columns: 1fr; gap: .4rem; }
+.bg-risk.compact .bg-level { font-size: 46px; }
 
 @media (max-width: 800px) { .bg-risk { grid-template-columns: 1fr; } }

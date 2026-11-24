@@ -12,9 +12,10 @@ from ui.state import cached_eval, prep, settings, ss, window_starts
 from ui.theme import show
 
 
-def result_block(res: WindowResult, key: str, simulated: bool = False, presenter: bool = False) -> None:
+def result_block(res: WindowResult, key: str, simulated: bool = False, presenter: bool = False,
+                 compact: bool = False) -> None:
     """Risk card, reasons and group chart. Used by this page and the Simulate page."""
-    risk_card(res, simulated=simulated)
+    risk_card(res, simulated=simulated, compact=compact)
     st.markdown("**Why this looks unusual for this user**" if res.level != "Low"
                 else "**What changed, if anything**")
     reasons(res)
