@@ -27,6 +27,12 @@ context_min_windows = 10        # windows to the same recipient needed for a con
 
 [scorer]
 detector = "isolation_forest"   # pluggable; later: "extended_isolation_forest", "one_class_svm"
+# What the detector sees for each window:
+#   "group_max" = the largest |z| in each of the six behaviour groups (6 numbers)  [default]
+#   "features"  = every feature's z-score (24 numbers)
+# On the synthetic sample the 24-number input hid large deviations: an Isolation Forest picks split
+# features at random and cannot split on features that never vary in the baseline.
+detector_input = "group_max"
 n_estimators = 200
 random_state = 42
 small_baseline_windows = 30     # below this, the simple max-|z| fallback is emphasised
