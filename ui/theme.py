@@ -45,12 +45,10 @@ def colors() -> dict:
 
 
 def inject(presenter: bool = False) -> None:
-    """Inject CSS variables for the active theme, the stylesheet, and presenter-mode sizing."""
-    c = colors()
-    vars_css = ":root{" + "".join(f"--bg-{k}:{v};" for k, v in c.items()) + "}"
+    """Inject the stylesheet (theme-aware on its own) and presenter-mode sizing."""
     presenter_css = ('[data-testid="stAppViewContainer"] .main, [data-testid="stMain"] { zoom: 1.12; }'
                      if presenter else "")
-    st.html(f"<style>{vars_css}{_CSS}{presenter_css}</style>")
+    st.html(f"<style>{_CSS}{presenter_css}</style>")
 
 
 def _template(m: str) -> go.layout.Template:

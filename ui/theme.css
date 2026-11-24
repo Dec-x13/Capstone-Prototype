@@ -1,6 +1,20 @@
 /* BehaviorGuard UI. Injected once by ui/theme.py.
-   Colors come from CSS variables that ui/theme.py sets for the active light or dark theme.
+   Text, rules and surfaces derive from the inherited text color, so they follow Streamlit's light or dark
+   theme even when it is switched live. Only the accent colors need a dark-mode variant.
    Selectors are scoped to our own .bg-* classes, except focus rings and presenter zoom. */
+:root {
+  --bg-accent: #0E6B6B;   /* Naga teal */
+  --bg-sim: #8F5A00;      /* ochre */
+}
+@media (prefers-color-scheme: dark) {
+  :root { --bg-accent: #5FB8B3; --bg-sim: #E0A84A; }
+}
+.bg-header, .bg-pipeline, .bg-risk, .bg-facts, .bg-empty, .bg-reasons, .bg-summary-line, .bg-label, .bg-note {
+  --bg-text: currentColor;
+  --bg-muted: color-mix(in srgb, currentColor 72%, transparent);
+  --bg-rule: color-mix(in srgb, currentColor 28%, transparent);
+  --bg-surface: color-mix(in srgb, currentColor 4%, transparent);
+}
 
 /* ---------- accessibility */
 :focus-visible { outline: 3px solid var(--bg-accent) !important; outline-offset: 2px !important; }
