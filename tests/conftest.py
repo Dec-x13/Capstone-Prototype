@@ -39,3 +39,15 @@ def df_a(load_a):
 @pytest.fixture(scope="session")
 def df_b(load_b):
     return load_b.df
+
+
+@pytest.fixture(scope="session")
+def prep_a(df_a):
+    from core.features import prepare_messages
+    return prepare_messages(df_a)
+
+
+@pytest.fixture(scope="session")
+def prep_b(df_b):
+    from core.features import prepare_messages
+    return prepare_messages(df_b)
