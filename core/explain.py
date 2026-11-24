@@ -68,6 +68,8 @@ def phrase(feature: str, dev: Deviation, win: Prepared, baseline: Baseline) -> s
         if style == "none":
             return "laughs more than usual" if up else None
         if up:
+            if usual == style:
+                return f"more '{style}' laughter than usual"
             return f"laughs with '{style}' (usually {repr(usual) if usual != 'none' else 'no laughter'})"
         return f"no '{style}' laughter (usually {_often(m, 0.1, 0.02)})" if x == 0 else f"less '{style}' laughter than usual"
     if feature == "punct_rate":

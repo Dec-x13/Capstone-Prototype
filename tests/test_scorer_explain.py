@@ -81,6 +81,20 @@ def test_reasons_are_sensible_and_neutral(prep_a, prep_b):
         assert word not in text
 
 
+def test_laughter_wording_same_style_as_usual(prep_a):
+    from core.explain import _usual_laugh, phrase
+    r = evaluate(prep_a, 200, 5, 100)
+    d = r.deviation
+    usual = _usual_laugh(d)
+    assert usual != "none"  # synthetic user A laughs 'HAHAHA'
+    d.z[f"laugh_{usual}"] = 5.0
+    p = phrase(f"laugh_{usual}", d, r.window, r.baseline)
+    assert p == f"more '{usual}' laughter than usual"
+    other = "lol" if usual != "lol" else "hehe"
+    d.z[f"laugh_{other}"] = 5.0
+    assert phrase(f"laugh_{other}", d, r.window, r.baseline) == f"laughs with '{other}' (usually '{usual}')"
+
+
 def test_habits_vs_length_wording(prep_a):
     r = evaluate(prep_a, 200, 5, 100)
     d = r.deviation
