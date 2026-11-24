@@ -64,7 +64,7 @@ Real exports belong outside the repository, or in `exports/`, which `.gitignore`
 | Explanation | `core/explain.py` | Neutral plain-language reasons, the agreement line, and a habits-vs-length line. |
 | Demo simulation | `core/simulate.py` | Inserts user B's window into A's timeline under normal or takeover timing (Section 4.1.3). |
 | Orchestration | `core/pipeline.py` | Runs baseline → deviation → score → reasons for one window. |
-| UI | `app.py` | Streamlit tabs: Load, Baseline, Check a window, Simulate, About. |
+| Interface | `app.py`, `ui/` | Streamlit pages: Load data, Your baseline, Check a window, Simulate a takeover, About. It also has a pipeline strip for the seven Table 4.5 stages, the risk result card, presenter mode, light and dark themes (system fonts only, `ui/theme.css`), and one shared Plotly template (`ui/theme.py`). |
 | Participant tool | `extract/extract_features.py` | Offline feature extraction with `--preview`. |
 
 All working values live in `config.toml`.

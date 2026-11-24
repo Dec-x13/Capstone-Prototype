@@ -56,7 +56,7 @@
 .bg-risk .bg-sq.on { background: var(--bg-risk); color: #fff; }
 .bg-risk .bg-agree { font-size: 22px; font-weight: 650; margin: 0 0 .25rem 0; }
 .bg-risk .bg-line { font-size: 17px; margin: .15rem 0; }
-.bg-risk .bg-foot { grid-column: 1 / -1; font-size: 14px; color: var(--bg-muted);
+.bg-risk .bg-foot { grid-column: 1 / -1; font-size: 15px; color: var(--bg-muted);
                     border-top: 1px solid var(--bg-rule); padding-top: .45rem; }
 
 /* ---------- reasons */
