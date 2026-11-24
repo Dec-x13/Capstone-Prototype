@@ -84,6 +84,28 @@ def test_recipient_codes_and_thread_types(df_a):
     assert df_a["recipient_code"].nunique() == 8
 
 
+def test_skipped_counts_by_kind(load_a):
+    by = load_a.skipped_by_kind
+    assert set(by) <= {"media", "unsent", "call", "other"}
+    assert sum(by.values()) == load_a.n_owner_skipped
+    # the synthetic generator writes photos, stickers, unsent placeholders and calls
+    assert by.get("media", 0) > 0 and by.get("unsent", 0) > 0 and by.get("call", 0) > 0
+    s = load_a.summary()
+    assert s["skipped media"] == by["media"] and s["skipped call"] == by["call"]
+
+
+def test_skip_kind_precedence():
+    from core.export_reader import _parse_classic_message
+    assert _parse_classic_message({"sender_name": "x", "timestamp_ms": 1, "is_unsent": True,
+                                   "photos": [{}]}).kind == "unsent"
+    assert _parse_classic_message({"sender_name": "x", "timestamp_ms": 1, "call_duration": 5,
+                                   "content": "x called you."}).kind == "call"
+    assert _parse_classic_message({"sender_name": "x", "timestamp_ms": 1, "sticker": {}}).kind == "media"
+    assert _parse_classic_message({"sender_name": "x", "timestamp_ms": 1,
+                                   "content": "Reacted 😂 to your message"}).kind == "other"
+    assert _parse_classic_message({"sender_name": "x", "timestamp_ms": 1, "content": "dai pa"}).kind == "text"
+
+
 def test_summary_has_counts_only(load_a):
     s = load_a.summary()
     assert s["messages kept"] == len(load_a.df)

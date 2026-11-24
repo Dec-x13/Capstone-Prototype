@@ -57,6 +57,17 @@ class RawMessage:
     timestamp_ms: int
     content: str | None
     is_text: bool  # False for media, calls, unsent, placeholders, reactions-only
+    kind: str = "text"  # text | media | unsent | call | other  (why a non-text item was skipped; counts only)
+
+
+def _skip_kind(unsent: bool, call: bool, media: bool) -> str:
+    if unsent:
+        return "unsent"
+    if call:
+        return "call"
+    if media:
+        return "media"
+    return "other"
 
 
 @dataclass
@@ -106,13 +117,15 @@ def _parse_classic_message(m: dict) -> RawMessage:
     content = m.get("content")
     content = fix_encoding(content) if isinstance(content, str) else None
     is_text = bool(content and content.strip())
-    if m.get("is_unsent") or m.get("type") in SKIP_TYPES or "call_duration" in m:
-        is_text = False
-    if any(k in m for k in MEDIA_KEYS):
+    unsent = bool(m.get("is_unsent"))
+    call = m.get("type") == "Call" or "call_duration" in m
+    media = any(k in m for k in MEDIA_KEYS)
+    if unsent or call or media or m.get("type") in SKIP_TYPES:
         is_text = False
     if is_text and _PLACEHOLDER.match(content.strip()):
         is_text = False
-    return RawMessage(sender, int(m.get("timestamp_ms", 0)), content, is_text)
+    kind = "text" if is_text else _skip_kind(unsent, call, media)
+    return RawMessage(sender, int(m.get("timestamp_ms", 0)), content, is_text, kind)
 
 
 def _read_classic_thread(folder: Path) -> Thread:
@@ -206,10 +219,12 @@ class E2EELayout(Layout):
                 text = fix_encoding(text) if isinstance(text, str) else None
                 ts = int(m.get(k["ts"], 0))
                 ts = ts * 1000 if ts < 10**11 else ts  # seconds -> ms if needed
-                is_text = bool(text and text.strip()) and not m.get(k["unsent"]) and not m.get(k["media"])
+                unsent, media = bool(m.get(k["unsent"])), bool(m.get(k["media"]))
+                is_text = bool(text and text.strip()) and not unsent and not media
                 if is_text and _PLACEHOLDER.match(text.strip()):
                     is_text = False
-                msgs.append(RawMessage(fix_encoding(m.get(k["sender"], "")), ts, text, is_text))
+                kind = "text" if is_text else _skip_kind(unsent, False, media)
+                msgs.append(RawMessage(fix_encoding(m.get(k["sender"], "")), ts, text, is_text, kind))
             yield Thread(f.stem, fix_encoding(doc.get(k["title"], f.stem)), parts, msgs)
 
 
@@ -260,6 +275,7 @@ class LoadResult:
     n_owner_text: int
     n_other_dropped: int
     n_owner_skipped: int      # owner items without usable text (media, calls, unsent, ...)
+    skipped_by_kind: dict = field(default_factory=dict)  # {"media": n, "unsent": n, "call": n, "other": n}
 
     def summary(self) -> dict:
         """Counts only, safe to display."""
@@ -270,6 +286,7 @@ class LoadResult:
             "messages kept": self.n_owner_text,
             "other people's messages dropped": self.n_other_dropped,
             "owner non-text items skipped": self.n_owner_skipped,
+            **{f"skipped {k}": self.skipped_by_kind.get(k, 0) for k in ("media", "unsent", "call", "other")},
             "recipients": int(df["recipient_code"].nunique()) if len(df) else 0,
             "first message": df["ts"].min().strftime("%Y-%m-%d") if len(df) else "-",
             "last message": df["ts"].max().strftime("%Y-%m-%d") if len(df) else "-",
@@ -282,6 +299,7 @@ def load_owner_messages(root: str | Path, owner: str, coder: RecipientCoder | No
     owner = owner.strip()
     rows = []
     n_threads = n_other = n_skip = 0
+    skipped: Counter = Counter()
     layouts = detect_layouts(root)
     for _, thread in iter_threads(root):
         n_threads += 1
@@ -298,10 +316,11 @@ def load_owner_messages(root: str | Path, owner: str, coder: RecipientCoder | No
                 continue
             if not m.is_text:
                 n_skip += 1
+                skipped[m.kind] += 1
                 continue
             rows.append((m.timestamp_ms, code, ttype, m.content))
         thread.messages.clear()  # release other people's text as early as possible
     df = pd.DataFrame(rows, columns=["ts", "recipient_code", "thread_type", "text"])
     df["ts"] = pd.to_datetime(df["ts"], unit="ms", utc=True).dt.tz_convert(TIMEZONE)
     df = df.sort_values("ts", kind="stable").reset_index(drop=True)
-    return LoadResult(df, layouts, n_threads, len(df), n_other, n_skip)
+    return LoadResult(df, layouts, n_threads, len(df), n_other, n_skip, dict(skipped))
