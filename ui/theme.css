@@ -1,0 +1,62 @@
+/* BehaviorGuard UI. Injected once by ui/theme.py.
+   Colors come from CSS variables that ui/theme.py sets for the active light or dark theme.
+   Selectors are scoped to our own .bg-* classes, except focus rings and presenter zoom. */
+
+/* ---------- accessibility */
+:focus-visible { outline: 3px solid var(--bg-accent) !important; outline-offset: 2px !important; }
+
+/* ---------- header */
+.bg-header { margin: 0 0 .4rem 0; }
+.bg-header .bg-name { font-size: 34px; font-weight: 700; letter-spacing: -.01em; line-height: 1.15; margin: 0; }
+.bg-header .bg-tagline { font-size: 19px; margin: .2rem 0 0 0; }
+.bg-header .bg-status { font-size: 15px; color: var(--bg-muted); margin: .35rem 0 0 0; }
+.bg-header .bg-status b { color: var(--bg-text); font-weight: 600; }
+
+/* ---------- pipeline strip */
+.bg-pipeline { display: flex; flex-wrap: wrap; gap: .2rem .1rem; align-items: center; margin: .5rem 0 .9rem 0;
+               padding: .45rem 0; border-top: 1px solid var(--bg-rule); border-bottom: 1px solid var(--bg-rule);
+               font-size: 15px; }
+.bg-stage { color: var(--bg-muted); padding: .1rem .35rem; border-bottom: 3px solid transparent; }
+.bg-stage.on { color: var(--bg-accent); font-weight: 700; border-bottom-color: var(--bg-accent); }
+.bg-sep { color: var(--bg-muted); padding: 0 .1rem; }
+
+/* ---------- labels */
+.bg-label { display: inline-block; font-size: 15px; font-weight: 600; padding: .15rem .55rem; border-radius: 3px;
+            border: 2px solid currentColor; }
+.bg-label.synth { color: var(--bg-accent); }
+.bg-label.sim { color: var(--bg-sim); }
+.bg-note { font-size: 15px; color: var(--bg-muted); }
+
+/* ---------- risk result card: the one bold element */
+.bg-risk { display: grid; grid-template-columns: minmax(200px, 1fr) 2fr; gap: .6rem 1.6rem;
+           border: 1px solid var(--bg-rule); border-left: 12px solid var(--bg-risk); padding: 1rem 1.3rem;
+           margin: .4rem 0 .9rem 0; background: var(--bg-surface); }
+.bg-risk .bg-level { font-size: 56px; font-weight: 750; line-height: 1; margin: 0; }
+.bg-risk .bg-meter { display: flex; gap: 5px; margin: .55rem 0 .35rem 0; }
+.bg-risk .bg-meter span { width: 34px; height: 11px; border: 2px solid var(--bg-risk); }
+.bg-risk .bg-meter span.on { background: var(--bg-risk); }
+.bg-risk .bg-chip { display: inline-block; background: var(--bg-risk); color: #fff; font-weight: 600;
+                    font-size: 15px; padding: .1rem .5rem; border-radius: 3px; }
+.bg-risk .bg-groups { display: flex; flex-wrap: wrap; gap: 6px; margin: .1rem 0 .35rem 0; }
+.bg-risk .bg-sq { font-size: 13px; padding: .12rem .4rem; border: 2px solid var(--bg-risk); }
+.bg-risk .bg-sq.on { background: var(--bg-risk); color: #fff; }
+.bg-risk .bg-agree { font-size: 22px; font-weight: 650; margin: 0 0 .25rem 0; }
+.bg-risk .bg-line { font-size: 17px; margin: .15rem 0; }
+.bg-risk .bg-foot { grid-column: 1 / -1; font-size: 14px; color: var(--bg-muted);
+                    border-top: 1px solid var(--bg-rule); padding-top: .45rem; }
+
+/* ---------- reasons */
+.bg-reasons { margin: .2rem 0 .6rem 1.1rem; padding: 0; }
+.bg-reasons li { font-size: 18px; margin: .25rem 0; }
+
+/* ---------- summaries */
+.bg-facts { display: grid; grid-template-columns: max-content 1fr; gap: .2rem 1rem; margin: .3rem 0 .6rem 0; }
+.bg-facts dt { color: var(--bg-muted); font-size: 16px; }
+.bg-facts dd { margin: 0; font-size: 18px; font-weight: 600; font-variant-numeric: tabular-nums; }
+.bg-big { font-size: 40px; font-weight: 700; line-height: 1.1; font-variant-numeric: tabular-nums; }
+.bg-summary-line { font-size: 18px; margin: .1rem 0 .7rem 0; }
+
+/* ---------- empty state */
+.bg-empty { border-left: 4px solid var(--bg-rule); padding: .6rem 1rem; margin: 1rem 0; font-size: 19px; }
+
+@media (max-width: 800px) { .bg-risk { grid-template-columns: 1fr; } }

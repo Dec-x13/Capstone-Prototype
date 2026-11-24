@@ -3,6 +3,13 @@ __pycache__/
 *.pyc
 .pytest_cache/
 
+# Secrets (the app uses none; never commit any)
+.env
+.env.*
+.streamlit/secrets.toml
+*.key
+*.pem
+
 # Real Messenger exports and anything derived from them must never be committed.
 exports/
 real_data/
