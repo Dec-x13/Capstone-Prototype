@@ -1,0 +1,66 @@
+{
+ "participants": [
+  {
+   "name": "Hugo Mockado"
+  },
+  {
+   "name": "Ana Synthetica"
+  }
+ ],
+ "messages": [
+  {
+   "sender_name": "Ana Synthetica",
+   "timestamp_ms": 1783758811613,
+   "content": "nnngani so true"
+  },
+  {
+   "sender_name": "Ana Synthetica",
+   "timestamp_ms": 1783758790613,
+   "content": "sure sure \u00e2\u009d\u00a4\u00ef\u00b8\u008f"
+  },
+  {
+   "sender_name": "Ana Synthetica",
+   "timestamp_ms": 1783758783613,
+   "content": "maray nnnna lang"
+  },
+  {
+   "sender_name": "Ana Synthetica",
+   "timestamp_ms": 1783758747613,
+   "content": "tara naaaa"
+  },
+  {
+   "sender_name": "Ana Synthetica",
+   "timestamp_ms": 1782829916589,
+   "content": "maray na lang"
+  },
+  {
+   "sender_name": "Ana Synthetica",
+   "timestamp_ms": 1782829910589,
+   "content": "HAHAHA grabe"
+  },
+  {
+   "sender_name": "Ana Synthetica",
+   "timestamp_ms": 1780641339431,
+   "content": "maray man ang result \u00f0\u009f\u0098\u00ad"
+  },
+  {
+   "sender_name": "Ana Synthetica",
+   "timestamp_ms": 1780641298431,
+   "content": "igwa pa meeting \u00f0\u009f\u0098\u00ad"
+  },
+  {
+   "sender_name": "Ana Synthetica",
+   "timestamp_ms": 1780641276431,
+   "content": "dai man problem HAHAHA"
+  },
+  {
+   "sender_name": "Ana Synthetica",
+   "timestamp_ms": 1780641259431,
+   "content": "garooooo ma-uran \u00f0\u009f\u0098\u0082"
+  }
+ ],
+ "title": "Hugo Mockado",
+ "is_still_participant": true,
+ "thread_path": "inbox/hugomockado_1005",
+ "magic_words": []
+}

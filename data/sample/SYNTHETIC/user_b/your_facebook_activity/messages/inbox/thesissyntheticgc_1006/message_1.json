@@ -1,0 +1,245 @@
+{
+ "participants": [
+  {
+   "name": "Jojo Inventado"
+  },
+  {
+   "name": "Kara Ficticia"
+  },
+  {
+   "name": "Luis Sampol"
+  },
+  {
+   "name": "Ben Synthetico"
+  }
+ ],
+ "messages": [
+  {
+   "sender_name": "Ben Synthetico",
+   "timestamp_ms": 1786269764017,
+   "content": "Ang dami ko pang gagawin pero sige gagawin ko na lang mamaya. Gusto ko sana mag-meeting tayo later para ma-finalize na natin. Kasi naman wala pa yung update from the team kaya hindi pa ako makapag-start"
+  },
+  {
+   "sender_name": "Ben Synthetico",
+   "timestamp_ms": 1786269540017,
+   "content": "Kailan ba yung next na meeting natin para ma-prepare ko na"
+  },
+  {
+   "sender_name": "Ben Synthetico",
+   "timestamp_ms": 1786028484780,
+   "content": "Kailan ba yung next na meeting natin para ma-prepare ko na. Bakit naman ganun yung sinabi niya parang hindi fair sa atin. Okay lang yun basta ma-submit natin bago mag deadline"
+  },
+  {
+   "sender_name": "Kara Ficticia",
+   "timestamp_ms": 1786028360780,
+   "content": "see you"
+  },
+  {
+   "sender_name": "Ben Synthetico",
+   "timestamp_ms": 1785927183262,
+   "content": "Hindi ko alam kung bakit pero sobrang busy talaga ako this week. Se\u00c3\u00b1or ng tita ko yung may-ari ng shop kaya pwede tayo doon lol"
+  },
+  {
+   "sender_name": "Ben Synthetico",
+   "timestamp_ms": 1785927000262,
+   "content": "sige"
+  },
+  {
+   "sender_name": "Jojo Inventado",
+   "timestamp_ms": 1785926936262,
+   "content": "see you"
+  },
+  {
+   "sender_name": "Ben Synthetico",
+   "timestamp_ms": 1785404716279,
+   "content": "Okay lang yun basta ma-submit natin bago mag deadline. Bakit naman ganun yung sinabi niya parang hindi fair sa atin"
+  },
+  {
+   "sender_name": "Luis Sampol",
+   "timestamp_ms": 1785404489279,
+   "content": "ok"
+  },
+  {
+   "sender_name": "Ben Synthetico",
+   "timestamp_ms": 1784733485998,
+   "content": "wait lang"
+  },
+  {
+   "sender_name": "Luis Sampol",
+   "timestamp_ms": 1784733410998,
+   "content": "nice"
+  },
+  {
+   "sender_name": "Ben Synthetico",
+   "timestamp_ms": 1784206986609,
+   "content": "Okay lang yun basta ma-submit natin bago mag deadline"
+  },
+  {
+   "sender_name": "Ben Synthetico",
+   "timestamp_ms": 1784206804609,
+   "content": "Hindi ko alam kung bakit pero sobrang busy talaga ako this week. Sige lang pwede naman natin pag-usapan bukas pagkatapos ng class. Ang dami ko pang gagawin pero sige gagawin ko na lang mamaya"
+  },
+  {
+   "sender_name": "Ben Synthetico",
+   "timestamp_ms": 1784206646609,
+   "content": "lol sige"
+  },
+  {
+   "sender_name": "Ben Synthetico",
+   "timestamp_ms": 1784206612609,
+   "content": "Ano ba plan natin for the weekend kasi wala pa akong idea. Talaga ba hindi ko alam na ganun pala yung nangyari. Hindi ko alam kung bakit pero sobrang busy talaga ako this week lol"
+  },
+  {
+   "sender_name": "Luis Sampol",
+   "timestamp_ms": 1784206460609,
+   "content": "nice"
+  },
+  {
+   "sender_name": "Ben Synthetico",
+   "timestamp_ms": 1784027654628,
+   "content": "Kailan ba yung next na meeting natin para ma-prepare ko na"
+  },
+  {
+   "sender_name": "Ben Synthetico",
+   "timestamp_ms": 1784027554628,
+   "content": "Pwede mo ba akong samahan bukas sa mall may bibilhin lang ako"
+  },
+  {
+   "sender_name": "Jojo Inventado",
+   "timestamp_ms": 1784027274628,
+   "content": "nice"
+  },
+  {
+   "sender_name": "Ben Synthetico",
+   "timestamp_ms": 1783603255320,
+   "sticker": {
+    "uri": "stickers/synthetic.png"
+   }
+  },
+  {
+   "sender_name": "Ben Synthetico",
+   "timestamp_ms": 1783603253320,
+   "content": "Ano ba plan natin for the weekend kasi wala pa akong idea"
+  },
+  {
+   "sender_name": "Ben Synthetico",
+   "timestamp_ms": 1783603219320,
+   "content": "sige"
+  },
+  {
+   "sender_name": "Ben Synthetico",
+   "timestamp_ms": 1783603021320,
+   "content": "Sana maayos na natin ito kasi nakaka-stress na talaga. Gusto ko sana mag-meeting tayo later para ma-finalize na natin"
+  },
+  {
+   "sender_name": "Kara Ficticia",
+   "timestamp_ms": 1783602774320,
+   "content": "haha"
+  },
+  {
+   "sender_name": "Ben Synthetico",
+   "timestamp_ms": 1783491524134,
+   "content": "lol sige"
+  },
+  {
+   "sender_name": "Luis Sampol",
+   "timestamp_ms": 1783491315134,
+   "content": "nice"
+  },
+  {
+   "sender_name": "Ben Synthetico",
+   "timestamp_ms": 1782997326875,
+   "content": "Nasaan na yung files na sinend mo kanina hindi ko makita sa drive"
+  },
+  {
+   "sender_name": "Kara Ficticia",
+   "timestamp_ms": 1782997189875,
+   "content": "thanks!"
+  },
+  {
+   "sender_name": "Ben Synthetico",
+   "timestamp_ms": 1782645739289,
+   "content": "Nasaan na yung files na sinend mo kanina hindi ko makita sa drive. Ang dami ko pang gagawin pero sige gagawin ko na lang mamaya"
+  },
+  {
+   "sender_name": "Ben Synthetico",
+   "timestamp_ms": 1782645551289,
+   "content": "lol sige"
+  },
+  {
+   "sender_name": "Kara Ficticia",
+   "timestamp_ms": 1782645478289,
+   "content": "thanks!"
+  },
+  {
+   "sender_name": "Ben Synthetico",
+   "timestamp_ms": 1782567506325,
+   "content": "Gusto ko sana mag-meeting tayo later para ma-finalize na natin. Kailan ba yung next na meeting natin para ma-prepare ko na lol"
+  },
+  {
+   "sender_name": "Ben Synthetico",
+   "timestamp_ms": 1781952559346,
+   "content": "Ang dami ko pang gagawin pero sige gagawin ko na lang mamaya. Kasi naman wala pa yung update from the team kaya hindi pa ako makapag-start"
+  },
+  {
+   "sender_name": "Ben Synthetico",
+   "timestamp_ms": 1781952359346,
+   "content": "wait lang"
+  },
+  {
+   "sender_name": "Ben Synthetico",
+   "timestamp_ms": 1781952134346,
+   "content": "Nasaan na yung files na sinend mo kanina hindi ko makita sa drive"
+  },
+  {
+   "sender_name": "Ben Synthetico",
+   "timestamp_ms": 1781868474406,
+   "content": "",
+   "is_unsent": true
+  },
+  {
+   "sender_name": "Ben Synthetico",
+   "timestamp_ms": 1781868472406,
+   "content": "Kasi naman wala pa yung update from the team kaya hindi pa ako makapag-start. Ang dami ko pang gagawin pero sige gagawin ko na lang mamaya"
+  },
+  {
+   "sender_name": "Ben Synthetico",
+   "timestamp_ms": 1781609724403,
+   "content": "Nasaan na yung files na sinend mo kanina hindi ko makita sa drive. Ang dami ko pang gagawin pero sige gagawin ko na lang mamaya. Ano ba plan natin for the weekend kasi wala pa akong idea"
+  },
+  {
+   "sender_name": "Ben Synthetico",
+   "timestamp_ms": 1781609694403,
+   "content": "Gusto ko sana mag-meeting tayo later para ma-finalize na natin"
+  },
+  {
+   "sender_name": "Ben Synthetico",
+   "timestamp_ms": 1781609581403,
+   "content": "Okay lang yun basta ma-submit natin bago mag deadline"
+  },
+  {
+   "sender_name": "Ben Synthetico",
+   "timestamp_ms": 1780485681503,
+   "content": "Nasaan na yung files na sinend mo kanina hindi ko makita sa drive lol"
+  },
+  {
+   "sender_name": "Ben Synthetico",
+   "timestamp_ms": 1780485526503,
+   "content": "Sana maayos na natin ito kasi nakaka-stress na talaga. Sige lang pwede naman natin pag-usapan bukas pagkatapos ng class"
+  },
+  {
+   "sender_name": "Ben Synthetico",
+   "timestamp_ms": 1780485399503,
+   "content": "wait lang"
+  },
+  {
+   "sender_name": "Ben Synthetico",
+   "timestamp_ms": 1780485310503,
+   "content": "Hindi ko alam kung bakit pero sobrang busy talaga ako this week. Talaga ba hindi ko alam na ganun pala yung nangyari. Okay lang yun basta ma-submit natin bago mag deadline"
+  }
+ ],
+ "title": "Thesis Synthetic GC",
+ "is_still_participant": true,
+ "thread_path": "inbox/thesissyntheticgc_1006",
+ "magic_words": []
+}

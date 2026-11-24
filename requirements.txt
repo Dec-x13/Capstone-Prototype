@@ -1,0 +1,7 @@
+# Python 3.11. Pinned for a reproducible, offline-capable defense demo.
+numpy==2.4.6
+pandas==3.1.1
+scikit-learn==1.9.1
+streamlit==1.67.0
+plotly==7.1.0
+pytest==9.2.0

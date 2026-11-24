@@ -1,0 +1,11 @@
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# Real Messenger exports and anything derived from them must never be committed.
+exports/
+real_data/
+*.zip
+features*.json
+screenshots/

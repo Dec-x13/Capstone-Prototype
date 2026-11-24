@@ -1,0 +1,127 @@
+{
+ "participants": [
+  {
+   "name": "Iris Fakedo"
+  },
+  {
+   "name": "Ana Synthetica"
+  }
+ ],
+ "messages": [
+  {
+   "sender_name": "Ana Synthetica",
+   "timestamp_ms": 1783644243059,
+   "content": "dakol pa assignment ko HAHAHA"
+  },
+  {
+   "sender_name": "Ana Synthetica",
+   "timestamp_ms": 1783644209059,
+   "content": "bbbako ini ang file"
+  },
+  {
+   "sender_name": "Iris Fakedo",
+   "timestamp_ms": 1783644097059,
+   "content": "nice"
+  },
+  {
+   "sender_name": "Ana Synthetica",
+   "timestamp_ms": 1783140134036,
+   "content": "hiii"
+  },
+  {
+   "sender_name": "Ana Synthetica",
+   "timestamp_ms": 1783140129036,
+   "content": "dakol pa assignment ko"
+  },
+  {
+   "sender_name": "Ana Synthetica",
+   "timestamp_ms": 1783140109036,
+   "content": "dai pa ko tapos"
+  },
+  {
+   "sender_name": "Ana Synthetica",
+   "timestamp_ms": 1783140078036,
+   "content": "send ko later"
+  },
+  {
+   "sender_name": "Ana Synthetica",
+   "timestamp_ms": 1782261233119,
+   "content": "helloooo"
+  },
+  {
+   "sender_name": "Ana Synthetica",
+   "timestamp_ms": 1782261206119,
+   "content": "ok ok"
+  },
+  {
+   "sender_name": "Ana Synthetica",
+   "timestamp_ms": 1782261181119,
+   "content": "gaaaro okay man"
+  },
+  {
+   "sender_name": "Ana Synthetica",
+   "timestamp_ms": 1780882333803,
+   "content": "where naaa u HAHAHA"
+  },
+  {
+   "sender_name": "Ana Synthetica",
+   "timestamp_ms": 1780882310803,
+   "content": "HAHAHAHA"
+  },
+  {
+   "sender_name": "Ana Synthetica",
+   "timestamp_ms": 1780497583266,
+   "content": "bako ini ang file HAHAHA"
+  },
+  {
+   "sender_name": "Ana Synthetica",
+   "timestamp_ms": 1780497549266,
+   "content": "helloooo"
+  },
+  {
+   "sender_name": "Ana Synthetica",
+   "timestamp_ms": 1780497543266,
+   "photos": [
+    {
+     "uri": "photos/synthetic.jpg"
+    }
+   ]
+  },
+  {
+   "sender_name": "Ana Synthetica",
+   "timestamp_ms": 1780497541266,
+   "content": "sige omw na"
+  },
+  {
+   "sender_name": "Ana Synthetica",
+   "timestamp_ms": 1780497519266,
+   "content": "pwede pa-gcash 150? dai pa ko sweldo HAHAHA"
+  },
+  {
+   "sender_name": "Ana Synthetica",
+   "timestamp_ms": 1780497497266,
+   "sticker": {
+    "uri": "stickers/synthetic.png"
+   }
+  },
+  {
+   "sender_name": "Ana Synthetica",
+   "timestamp_ms": 1780497495266,
+   "content": "dakol pa assignment ko"
+  },
+  {
+   "sender_name": "Ana Synthetica",
+   "timestamp_ms": 1780497486266,
+   "content": "heyyy"
+  },
+  {
+   "sender_name": "Iris Fakedo",
+   "timestamp_ms": 1780497279266,
+   "content": "omw"
+  }
+ ],
+ "title": "Iris Fakedo",
+ "is_still_participant": true,
+ "thread_path": "inbox/irisfakedo_1006",
+ "magic_words": []
+}
