@@ -47,6 +47,7 @@ def summary(slot: str) -> None:
         ("Date range", f'{s["first message"]} to {s["last message"]}'),
         ("Recipients", f'{s["recipients"]} (shown only as codes like R07)'),
         ("Export layout", s["layouts"]),
+        ("Read from", s.get("source", "unzipped folder")),
         ("Threads read", s["threads"]),
     ])
     dropped = [("other people's messages", s["other people's messages dropped"]),
@@ -66,22 +67,23 @@ def form(slot: str, sample: str) -> None:
         path = str(SAMPLE_DIR / sample)
         st.caption("Two invented users made for testing. No real person's messages.")
     else:
-        path = st.text_input("Folder of the unzipped Facebook export (JSON format)", key=f"{slot}_path",
+        path = st.text_input("Facebook export (JSON format): a folder or a .zip", key=f"{slot}_path",
                              placeholder=r"C:\thesis-data\me")
         if not path:
-            st.caption("Paste the folder that contains messages/inbox or your_facebook_activity/messages.")
+            st.caption("Paste the unzipped export folder, the folder holding all of its .zip parts, or one .zip. "
+                       "Zips are read in place; nothing is extracted.")
             return
     p = Path(path.strip().strip('"'))
     if not p.exists():
         st.error(f"Folder not found: {p}. Check the spelling, or copy the path from the File Explorer address bar.")
         return
-    if not p.is_dir():
-        st.error("That path is a file. Unzip the export first, then paste the folder, not the .zip.")
+    if p.is_file() and p.suffix.lower() != ".zip":
+        st.error("That path is a file. Paste the export folder, the folder of .zip parts, or a .zip file.")
         return
     try:
         layouts = detect_layouts(p)
         if not layouts:
-            st.error("No Messenger messages found in this folder. Pick the unzipped folder that contains "
+            st.error("No Messenger messages found here. Pick the export folder (or its .zip parts) that contains "
                      "messages/inbox or your_facebook_activity/messages. If the export is in HTML format, "
                      "request it again from Facebook as JSON.")
             return

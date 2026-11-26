@@ -47,13 +47,13 @@ Dependencies: pandas, numpy, scikit-learn, streamlit, plotly, pytest (pinned in 
 | Offline | No network imports (checked by `tests/test_offline_privacy.py`). Streamlit runs headless, bound to localhost, with usage stats off (`.streamlit/config.toml` and the launcher flags). |
 | Participant extraction | `extract/extract_features.py` writes only timestamps, recipient codes, numeric features and salted-hash counts. A test checks that no original token appears in the output. |
 
-Real exports belong outside the repository, or in `exports/`, which `.gitignore` excludes.
+Real exports belong outside the repository, or in `exports/`, which `.gitignore` excludes. They can stay zipped: the reader opens only the message JSON inside the zips, in memory.
 
 ## Modules (pipeline order, Section 4.2.3 / Table 4.5)
 
 | Pipeline step | Module | What it does |
 |---|---|---|
-| Data acquisition | `core/export_reader.py` | Auto-detects the export layout (registry; currently `legacy` `messages/inbox`, `dyi_2024` `your_facebook_activity/messages`, and a **provisional** `e2ee` reader). Fixes Facebook's latin-1/UTF-8 encoding bug. Keeps the owner's text messages and skips media, calls, unsent messages and system placeholders. Returns `ts` (Asia/Manila), `recipient_code`, `thread_type`, `text`. |
+| Data acquisition | `core/export_reader.py`, `core/zip_source.py` | Auto-detects the export layout (registry; currently `legacy` `messages/inbox`, `dyi_2024` `your_facebook_activity/messages`, checked against a real 2026 export, and a **provisional** `e2ee` reader). Reads every thread subfolder, including `e2ee_cutover`. Accepts an unzipped folder, one .zip, or the folder of .zip parts Facebook splits a large export into; zips are read in place and only the message JSON is opened, so nothing is extracted. Fixes Facebook's latin-1/UTF-8 encoding bug. Keeps the owner's text messages and skips media, calls, unsent messages and system lines ("You joined the call", "You pinned a message", ...). Returns `ts` (Asia/Manila), `recipient_code`, `thread_type`, `text`. |
 | Anonymization | `core/anonymize.py` | Random recipient codes and display masking. |
 | Language tagging | `core/language_tagger.py`, `wordlists/` | Tags each token as bikol, tagalog, english, ambiguous or other. Stretched letters are shortened (3+ repeats become 1, then 2) before lookup, and abbreviations are expanded. Also computes code-switching and the dominant mix rule (below). |
 | Windowing | `core/windows.py` | Windows of k messages (1/3/5/10). The baseline is the previous N messages (50/100/150/200), split into sliding windows of size k. A burst means each message comes within 60 s of the previous one. |
@@ -131,6 +131,6 @@ No real person's messages are in it.
 - Feasibility only: there are no labeled takeover data and no performance figures.
 - The word lists are seeds. A native speaker must review them, and the tagger must be checked against 500 hand-labeled words.
 - The cutoffs are prototype cutoffs.
-- The E2EE-download reader is provisional until it has been checked against a real file.
+- The separate E2EE-download reader is provisional. The real 2026 export put encrypted chats in `e2ee_cutover/`, which the main reader handles.
 - A behavior change has many innocent causes, such as a new topic, a new group or a different device. The output says "unusual for this user", not "not the user".
 - Sliding baseline windows overlap, so they are not independent samples.

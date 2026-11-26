@@ -3,7 +3,9 @@
 **Before the panel arrives (5 min)**
 
 - Run `run_demo.bat`, open <http://localhost:8501>, and set browser zoom to 100–125% for the projector.
-- Keep both exports unzipped **outside** the repo, e.g. `C:\thesis-data\me\` and `C:\thesis-data\partner\`.
+- Keep both exports **outside** the repo, e.g. `C:\thesis-data\me\` and `C:\thesis-data\partner\`. Each can be the
+  unzipped folder or simply the folder holding all of Facebook's .zip parts (read in place, nothing extracted).
+  Loading a large export takes about 15 seconds.
 - Rehearse once with the synthetic sample (fallback path below). Press **Reset** before the panel starts.
 - Check the settings (**k = 5**, **N = 100**, context-matched baseline **on**), then turn on **Presenter mode** in the
   sidebar. It enlarges the type and hides the advanced controls. The synthetic-sample label and the cutoff note stay visible.
@@ -18,7 +20,8 @@ The strip below them shows the seven pipeline stages of Table 4.5, with the stag
 
 ### 1. Load my export (≈1 min)
 
-**Load data → User A · account owner → "Export folder on this computer"** → paste the path.
+**Load data → User A · account owner → "Export folder on this computer"** → paste the path (the folder of .zip
+parts works too).
 The strip highlights **Export reader**.
 
 > "The app detects the export layout and suggests the most frequent sender as the owner. I confirm my name.

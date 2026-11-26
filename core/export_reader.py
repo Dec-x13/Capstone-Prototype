@@ -7,16 +7,22 @@ Layouts are pluggable. Each layout is a small class registered with @register_la
 (1) says whether it recognises a folder and (2) yields Thread records. To support a new
 Facebook layout, add one class; nothing else changes.
 
-Supported now (verified against the SYNTHETIC sample only; re-check on a real export):
-  legacy      messages/inbox/<thread>/message_N.json
-  dyi_2024    your_facebook_activity/messages/<inbox|archived_threads|...>/<thread>/message_N.json
-  e2ee        separate end-to-end-encrypted chats download (PROVISIONAL: key names assumed,
-              to be confirmed on a real export before the defense)
+Supported now:
+  legacy      messages/inbox/<thread>/message_N.json                      (synthetic sample)
+  dyi_2024    your_facebook_activity/messages/<subfolder>/<thread>/message_N.json
+              (checked against a real 2026 export: inbox, archived_threads, filtered_threads,
+              message_requests, e2ee_cutover and e2ee_cutover_archived all use this classic format)
+  e2ee        separate end-to-end-encrypted chats download (PROVISIONAL: key names assumed; the real
+              2026 export put encrypted chats in e2ee_cutover/ instead, read by dyi_2024)
+
+The export can be an unzipped folder, a single .zip, or a folder holding all the .zip parts Facebook
+splits a large export into. Zips are read in place (core/zip_source.py); nothing is extracted.
 """
 from __future__ import annotations
 
 import json
 import re
+import zipfile
 from collections import Counter
 from dataclasses import dataclass, field
 from pathlib import Path
@@ -26,16 +32,25 @@ import pandas as pd
 
 from .anonymize import RecipientCoder
 from .config import TIMEZONE
+from .zip_source import ZipTree, zip_parts
 
-THREAD_SUBFOLDERS = ("inbox", "archived_threads", "filtered_threads", "message_requests", "e2ee_cutover")
+# Read first, in this order; any other subfolder holding <thread>/message_N.json is read after them.
+THREAD_SUBFOLDERS = ("inbox", "archived_threads", "filtered_threads", "message_requests", "e2ee_cutover",
+                     "e2ee_cutover_archived")
 MEDIA_KEYS = ("photos", "videos", "audio_files", "files", "gifs", "sticker")
 SKIP_TYPES = {"Call", "Subscribe", "Unsubscribe"}
-# System placeholders Facebook writes into `content`.
+# System lines Facebook writes into `content` (whole-string match only).
 _PLACEHOLDER = re.compile(
     r"^(?:.+ (?:unsent a message|sent an attachment|sent a photo|sent a video|sent a sticker"
     r"|sent a voice message|sent a GIF|called you|missed your call|missed a call"
-    r"|set the nickname.*|named the group.*|changed the group photo|left the group"
-    r"|added .+ to the group|removed .+ from the group)\.?"
+    r"|set (?:the |your )?(?:nickname|emoji|quick reaction|theme|chat theme).*"
+    r"|named the (?:group|chat).*"
+    r"|changed the (?:group photo|theme|chat theme|emoji|quick reaction|group name|chat name).*"
+    r"|left the (?:group|chat)|added .+ to the (?:group|chat)|removed .+ from the (?:group|chat)"
+    r"|joined the (?:video |voice |audio )?(?:call|chat)|pinned a message"
+    r"|started (?:a |an )?(?:video |voice |audio )?(?:call|chat)|started sharing .*"
+    r"|turned (?:on|off) (?:disappearing messages|vanish mode).*)\.?"
+    r"|You (?:can now (?:message|call)|are now connected) .*"
     r"|Reacted .+ to your message|You unsent a message\.?|This message was unsent\.?)$",
     re.IGNORECASE,
 )
@@ -104,8 +119,10 @@ class Layout:
 
 
 def _thread_dirs(messages_dir: Path) -> Iterator[Path]:
-    for sub in THREAD_SUBFOLDERS:
-        base = messages_dir / sub
+    """Every <subfolder>/<thread>/ holding message_N.json: the known subfolders first, then any new ones."""
+    known = [messages_dir / s for s in THREAD_SUBFOLDERS]
+    extra = sorted(p for p in messages_dir.iterdir() if p.is_dir() and p.name not in THREAD_SUBFOLDERS)
+    for base in known + extra:
         if base.is_dir():
             for d in sorted(p for p in base.iterdir() if p.is_dir()):
                 if any(d.glob("message_*.json")):
@@ -134,7 +151,7 @@ def _read_classic_thread(folder: Path) -> Thread:
     title = ""
     msgs: list[RawMessage] = []
     for f in sorted(folder.glob("message_*.json")):
-        with open(f, encoding="utf-8") as fh:
+        with f.open(encoding="utf-8") as fh:
             doc = json.load(fh)
         participants = participants or [fix_encoding(p.get("name", "")) for p in doc.get("participants", [])]
         title = title or fix_encoding(doc.get("title", ""))
@@ -194,7 +211,7 @@ class E2EELayout(Layout):
             if f.name.startswith("message_"):
                 continue
             try:
-                with open(f, encoding="utf-8") as fh:
+                with f.open(encoding="utf-8") as fh:
                     head = fh.read(4096)
             except OSError:
                 continue
@@ -210,7 +227,7 @@ class E2EELayout(Layout):
     def threads(cls, root: Path) -> Iterator[Thread]:
         k = cls._KEYS
         for f in cls._files(root):
-            with open(f, encoding="utf-8") as fh:
+            with f.open(encoding="utf-8") as fh:
                 doc = json.load(fh)
             parts = [fix_encoding(p if isinstance(p, str) else p.get("name", "")) for p in doc.get(k["participants"], [])]
             msgs = []
@@ -233,9 +250,7 @@ class UnknownLayoutError(ValueError):
     pass
 
 
-def detect_layouts(root: str | Path) -> list[str]:
-    """All layouts recognised under `root` (an export can hold DYI and E2EE parts side by side)."""
-    root = Path(root)
+def _detect(root) -> list[str]:
     found = [L.name for L in LAYOUTS if L.detect(root)]
     # An E2EE download unzipped next to the main export: look one level down too.
     if not found:
@@ -244,9 +259,38 @@ def detect_layouts(root: str | Path) -> list[str]:
     return found
 
 
+def resolve_root(root: str | Path):
+    """An unzipped folder as is; otherwise a .zip file, or a folder of .zip parts, as one merged ZipTree."""
+    if isinstance(root, ZipTree):
+        return root
+    p = Path(root)
+    if p.is_dir() and _detect(p):
+        return p
+    parts = zip_parts(p)
+    if parts:
+        try:
+            return ZipTree.from_zips(parts, label=p.name)
+        except zipfile.BadZipFile as e:
+            raise UnknownLayoutError(f"A .zip file here could not be opened ({e}).") from e
+    return p
+
+
+def source_label(root) -> str:
+    """Counts-only description of where the export was read from."""
+    if isinstance(resolve_root(root), ZipTree):
+        n = len(zip_parts(Path(root)))
+        return f"{n} .zip file{'s' if n != 1 else ''} (read in place)"
+    return "unzipped folder"
+
+
+def detect_layouts(root: str | Path) -> list[str]:
+    """All layouts recognised under `root` (an export can hold DYI and E2EE parts side by side)."""
+    return _detect(resolve_root(root))
+
+
 def iter_threads(root: str | Path) -> Iterator[tuple[str, Thread]]:
-    root = Path(root)
-    layouts = detect_layouts(root)
+    root = resolve_root(root)
+    layouts = _detect(root)
     if not layouts:
         raise UnknownLayoutError(
             "No Messenger data found. Expected messages/inbox/... or your_facebook_activity/messages/...")
@@ -276,12 +320,14 @@ class LoadResult:
     n_other_dropped: int
     n_owner_skipped: int      # owner items without usable text (media, calls, unsent, ...)
     skipped_by_kind: dict = field(default_factory=dict)  # {"media": n, "unsent": n, "call": n, "other": n}
+    source: str = "unzipped folder"
 
     def summary(self) -> dict:
         """Counts only, safe to display."""
         df = self.df
         return {
             "layouts": ", ".join(self.layouts),
+            "source": self.source,
             "threads": self.n_threads,
             "messages kept": self.n_owner_text,
             "other people's messages dropped": self.n_other_dropped,
@@ -300,7 +346,9 @@ def load_owner_messages(root: str | Path, owner: str, coder: RecipientCoder | No
     rows = []
     n_threads = n_other = n_skip = 0
     skipped: Counter = Counter()
-    layouts = detect_layouts(root)
+    source = source_label(root)
+    root = resolve_root(root)
+    layouts = _detect(root)
     for _, thread in iter_threads(root):
         n_threads += 1
         others = [p for p in thread.participants if p != owner]
@@ -323,4 +371,4 @@ def load_owner_messages(root: str | Path, owner: str, coder: RecipientCoder | No
     df = pd.DataFrame(rows, columns=["ts", "recipient_code", "thread_type", "text"])
     df["ts"] = pd.to_datetime(df["ts"], unit="ms", utc=True).dt.tz_convert(TIMEZONE)
     df = df.sort_values("ts", kind="stable").reset_index(drop=True)
-    return LoadResult(df, layouts, n_threads, len(df), n_other, n_skip, dict(skipped))
+    return LoadResult(df, layouts, n_threads, len(df), n_other, n_skip, dict(skipped), source)
